@@ -9,12 +9,12 @@
 
 @font-face {
     font-family: "Alegreya";
-    src: url('fonts/Alegreya.ttf');
+    src: url('../css/Alegreya.ttf');
 }
 
 @font-face {
-    font-family: "Muthiara";
-    src: url('fonts/Muthiara.otf');
+    font-family: "Aegean";
+    src: url('../css/TAN.ttf');
 }
 
 * {
@@ -40,7 +40,7 @@ section {
 }
 
 .heading {
-    font-family: 'Muthiara', sans-serif;
+    font-family: 'Aegean';
     text-align: center;
     color: var(--pink);
     font-size: 4rem;
@@ -52,7 +52,7 @@ section {
 
 .heading span {
     color: var(--pink);
-    font-family: 'Muthiara', sans-serif;
+    font-family: 'Aegean', sans-serif;
 }
 
 .btn {
@@ -131,7 +131,9 @@ header .fa-bars {
 
 header .search-bar {
     background: #fff;
-    border-radius: .5rem;
+    border: #3c5237 .1rem solid;
+    padding-left: 1rem;
+    border-radius: 5rem;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -154,7 +156,7 @@ header .search-bar input {
     display: flex;
     align-items: center;
     min-height: 100vh;
-    background: url(pixiewireheader.png) no-repeat;
+    background: url(../images/pixiewireheader.png) no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -164,7 +166,7 @@ header .search-bar input {
 }
 
 .home .content h3 {
-    font-family: 'Muthiara', sans-serif;
+    font-family: 'Aegean', sans-serif;
     font-size: 7rem;
     color: var(--yellow);
     font-weight: lighter;
