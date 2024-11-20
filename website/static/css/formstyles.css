@@ -76,9 +76,8 @@ body {
 
 .input-box i {
     position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
+    padding-top: 0.85rem;
+    right: 1rem;
     font-size: 20px;
 }
 
