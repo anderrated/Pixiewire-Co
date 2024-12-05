@@ -7,7 +7,6 @@
         <title>Pixiewire Co</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link rel="stylesheet" href="../static/css/styles.css">
-
         <title>Pixiewire Co | {% block title %} {% endblock %}</title>
     </head>
     <body>
@@ -32,7 +31,15 @@
             <div class="icons">
                 <a href="#" class="fas fa-heart"></a>
                 <a href="#" class="fas fa-shopping-cart"></a>
-                <a href="forms.html" class="fas fa-user"></a>
+                <div class="dropdown" id="profileDropdown" data-bs-toggle="dropdown">
+                    <a href="#" class="fas fa-user"></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Orders</a></li>
+                        <li><a class="dropdown-item" href="/logout">Log Out</a></li>
+                        <li><a class="dropdown-item" href="/login">Login</a></li>
+                    </ul>
+                </div>
             </div>
         </header>
 
@@ -252,5 +259,7 @@ Thank you for stopping by! We hope Pixiewire becomes your go-to place for all th
 
             <div class="credit">Created by <span>Pixiewire</span> | All Rights Reserved</div>
         </section>
+    
+    <script src="../static/js/myscripts.js"></script>
     </body>
 </html>

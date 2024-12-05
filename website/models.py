@@ -1,16 +1,17 @@
 from math import prod
-from sqlalchemy import Nullable
+from sqlalchemy import Nullable, null
 from . import db
 from flask_login import UserMixin
 from datetime import datetime
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
+from flask_sqlalchemy import SQLAlchemy
 
-class Costumer(db.Model, UserMixin):
+class Customer(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(150), unique=True)
-    username = db.Column(db.String(150), unique=True)
-    password_hash = db.Column(db.String(150))
+    email = db.Column(db.String(150), unique=True, nullable=False)
+    username = db.Column(db.String(150), unique=True, nullable=False)   
+    password_hash = db.Column(db.String(150), nullable=False)
     date_joined = db.Column(db.DateTime, default=datetime.utcnow)
 
     cart_items = db.relationship('Cart', backref=db.backref('customer', lazy=True))
@@ -28,7 +29,7 @@ class Costumer(db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
 
     def __str__(self):
-        return '<Customer %r>' % Costumer.id
+        return '<Customer %r>' % Customer.id
 
 
 class Product(db.Model):
@@ -51,7 +52,7 @@ class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     quantity = db.Column(db.Integer, nullable = False)
 
-    customer_link = db.Column(db.Integer, db.ForeignKey('costumer.id'), nullable = False)
+    customer_link = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable = False)
     product_link = db.Column(db.Integer, db.ForeignKey('product.id'), nullable = False)
 
     #customer product
@@ -66,7 +67,7 @@ class Order(db.Model):
     status = db.Column(db.String(100), nullable = False)
     payment_id = db.Column(db.String(1000), nullable = False)
 
-    customer_link = db.Column(db.Integer, db.ForeignKey('costumer.id'), nullable = False)
+    customer_link = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable = False)
     product_link = db.Column(db.Integer, db.ForeignKey('product.id'), nullable = False)
 
     #customer

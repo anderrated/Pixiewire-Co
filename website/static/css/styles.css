@@ -105,14 +105,69 @@ header .navbar a:hover {
     color: var(--pink);
 }
 
-header .icons a {
+.icons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+header .icons a, header .icons .dropdown a {
     font-size: 2.5rem;
     color: var(--green);
-    margin-left: 1.5rem;
 }
 
 header .icons a:hover {
     color: var(--pink);
+}
+
+header .dropdown-menu {
+    display: none;
+    position: absolute;
+    margin-top: 10px;
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0;
+}
+
+/* Show the dropdown menu when hovering over the dropdown */
+header .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown.show .dropdown-menu {
+    display: block;
+}
+
+/* Style for the dropdown items */
+header .dropdown-menu li {
+    list-style: none;
+}
+
+header .dropdown-menu li .dropdown-item {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: var(--green);
+    font-family: 'Alegreya', sans-serif;
+    font-size: 2rem;
+    white-space: nowrap;
+}
+
+header .dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: var(--green);
+}
+
+header .dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+header .dropdown {
+    position: relative;
 }
 
 header #toggler {
