@@ -1,11 +1,7 @@
-from math import prod
-from sqlalchemy import Nullable, null
 from . import db
 from flask_login import UserMixin
 from datetime import datetime
-from werkzeug.security import generate_password_hash
-from werkzeug.security import check_password_hash
-from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class Customer(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)

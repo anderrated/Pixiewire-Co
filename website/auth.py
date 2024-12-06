@@ -1,8 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from wtforms import form
-from  .forms import LoginForm, SignUpForm
+from .forms import LoginForm, SignUpForm
 from .models import Customer
-from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user
 from . import db
 
@@ -15,48 +13,58 @@ def sign_up():
     if form.validate_on_submit():  # Validate form submission
         email = form.email.data
         username = form.username.data
-        password = form.password1.data
+        password1 = form.password1.data
+        password2 = form.password2.data
 
-        # Check if user already exists
-        existing_user = Customer.query.filter_by(email=email).first()
-        if existing_user:
-            flash('Email is already registered.', 'danger')
-            return redirect(url_for('auth.sign_up'))
+        if password1 == password2:
+            new_customer = Customer()
+            new_customer.email = email
+            new_customer.username = username
+            new_customer.password = password2
+            
+            try:
+                db.session.add(new_customer)
+                db.session.commit()
+                flash('Account created successfully! You can now log in.', 'success')
+                return redirect(url_for('auth.login'))
+            except Exception as e:
+                print(e)
+                flash('An error occurred. Please try again.', 'danger')
 
-        # Create a new user
-        new_user = Customer(email=email, username=username, password=generate_password_hash(password))
-        try:
-            db.session.add(new_user)
-            db.session.commit()
-            flash('Account created successfully! You can now log in.', 'success')
-            return redirect(url_for('auth.login'))
-        except Exception as e:
-            print(e)
-            flash('An error occurred. Please try again.', 'danger')   
+            form.email.data = ''
+            form.username.data = ''
+            form.password1.data = ''
+            form.password2.data = ''
+
     return render_template('signup.html', form=form) 
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    print('Login route accessed')
     form = LoginForm()
     if form.validate_on_submit():  # Validate form submission
-        email = form.email.data
+        username = form.username.data
         password = form.password.data
-
         # Check if user exists
-        user = Customer.query.filter_by(email=email).first()
-        if user and check_password_hash(user.password, password):
-            login_user(user)
-            flash('Logged in successfully!', 'success')
-            return redirect(url_for('views.home'))  # Replace with your main page route
+        customer = Customer.query.filter_by(username=username).first()
+        print(customer)
+        if customer:
+            if customer.verify_password(password=password):
+                login_user(customer)
+                print('Logged in successfully!')
+                flash('Logged in successfully!', 'success')
+                return redirect(url_for('views.home'))
+            else:
+                flash('Incorrect username or password. Please try again.', 'danger')
         else:
-            flash('Invalid email or password.', 'danger')
+            flash('Account does not exist. Please sign up.', 'danger')
     return render_template('login.html', form=form)
 
-@auth.route('/logout')
+@auth.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
     logout_user()
     flash('Logged out successfully!', 'success')
-    return redirect(url_for('views.home'))
+    return redirect(url_for('/'))
 
 

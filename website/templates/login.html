@@ -7,14 +7,17 @@
 
 {% block body %}
     <div class="wrapper">
-        <form action="/login" method="post">
+        <form action="/login" method="post" action="{{ url_for('auth.login') }}">
+            {{ form.hidden_tag() }}
             <h1>Login</h1>
             <div class="input-box">
-                <input type="text" placeholder="Username" required>
-                <i class="fas fa-user"></i>
+                {{ form.username.label }}
+                {{ form.username(class="form-control") }}
             </div>
+
             <div class="input-box">
-                <input type="password" placeholder="Password" required>
+                {{ form.password.label }}
+                {{ form.password(class="form-control") }}
                 <i class="fas fa-lock"></i>
             </div>
 
