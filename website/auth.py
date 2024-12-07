@@ -40,18 +40,15 @@ def sign_up():
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    print('Login route accessed')
     form = LoginForm()
     if form.validate_on_submit():  # Validate form submission
         username = form.username.data
         password = form.password.data
         # Check if user exists
         customer = Customer.query.filter_by(username=username).first()
-        print(customer)
         if customer:
             if customer.verify_password(password=password):
                 login_user(customer)
-                print('Logged in successfully!')
                 flash('Logged in successfully!', 'success')
                 return redirect(url_for('views.home'))
             else:
@@ -65,6 +62,10 @@ def login():
 def logout():
     logout_user()
     flash('Logged out successfully!', 'success')
-    return redirect(url_for('/'))
+    return redirect(url_for('views.home'))
 
-
+@auth.route('/profile/<int:customer_id>', methods=['GET', 'POST'])
+@login_required
+def profile(customer_id):
+    customer = Customer.query.get(customer_id)
+    return render_template('profile.html', customer=customer)

@@ -34,10 +34,13 @@
                 <div class="dropdown" id="profileDropdown" data-bs-toggle="dropdown">
                     <a href="#" class="fas fa-user"></a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Orders</a></li>
-                        <li><a class="dropdown-item" href="/logout">Log Out</a></li>
-                        <li><a class="dropdown-item" href="/login">Login</a></li>
+                        {% if current_user.is_authenticated %}
+                        <li><a class="dropdown-item" href="/profile/{{ current_user.id }}">Profile <i class="fas fa-user"></i></a></li>
+                        <li><a class="dropdown-item" href="#">Orders <i class="fas fa-truck"></i></a></li>
+                        <li><a class="dropdown-item" href="/logout">Log Out <i class="fas fa-arrow-right"></i></a></li>
+                        {% else %}
+                        <li><a class="dropdown-item" href="/login">Login <i class="fas fa-arrow-left"></i></a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
